@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\Account\SettingsController;
 use App\Http\Controllers\Auth\SocialiteLoginController;
+use App\Http\Controllers\Autos\RegistrationController;
+use App\Http\Controllers\Autos\ListController;
 use App\Http\Controllers\Documentation\ReferencesController;
 use App\Http\Controllers\Logs\AuditLogsController;
 use App\Http\Controllers\Logs\SystemLogsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +59,13 @@ Route::middleware('auth')->group(function () {
         Route::resource('system', SystemLogsController::class)->only(['index', 'destroy']);
         Route::resource('audit', AuditLogsController::class)->only(['index', 'destroy']);
     });
+    // Autos pages
+    Route::prefix('autos')->group(function () {
+        Route::resource('registration', RegistrationController::class);
+        Route::get('list', [ListController::class, 'index']);
+        Route::post('list', [ListController::class, 'autosDB'])->name('show.autos');
+    });
+
 });
 
 Route::resource('users', UsersController::class);
