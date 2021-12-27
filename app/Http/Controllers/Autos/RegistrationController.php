@@ -17,8 +17,8 @@ class RegistrationController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $autos = Auto::where('user_id',$id)->get();
-        return view('autos.registration.index',compact('autos'));
+        $autos = Auto::where('user_id', $id)->get();
+        return view('autos.registration.index', compact('autos'));
     }
 
     /**
@@ -29,8 +29,8 @@ class RegistrationController extends Controller
     public function create()
     {
         $id = Auth::id();
-        $autos = Auto::where('user_id',$id)->get();
-        return view('autos.registration.create',compact('autos'));
+        $autos = Auto::where('user_id', $id)->get();
+        return view('autos.registration.create', compact('autos'));
     }
 
     /**
@@ -52,8 +52,10 @@ class RegistrationController extends Controller
             'model' => $request->model,
             'year' => $request->year
         ]);
+        $autos = Auto::where('user_id', $id)->get();
         $message = 'Авто успішно створене';
-        return view('autos.registration.index')->with('message', $message);
+
+        return view('autos.registration.index', compact('message', 'autos'));
     }
 
     /**
@@ -75,7 +77,10 @@ class RegistrationController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $auto = Auto::where('id', $id)->get()->first();
+        //dd($auto->id);
+        return view('autos.registration.edit', compact('auto'));
     }
 
     /**
@@ -87,7 +92,22 @@ class RegistrationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dd($request->all());
+        $auto = Auto::whereId($id)->update([
+            'user_id' => $id,
+            'owner_name' => $request->owner_name,
+            'state_number' => $request->state_number,
+            'color' => $request->color,
+            'vin_code' => $request->vin_code,
+            'brand' => $request->brand,
+            'model' => $request->model,
+            'year' => $request->year
+        ]);
+        $id = Auth::id();
+        $autos = Auto::where('user_id', $id)->get();
+        $message = "Авто з ID = " . $id . " успішно оновлене";
+
+        return view('autos.registration.index', compact('autos', 'message'));
     }
 
     /**
@@ -98,6 +118,12 @@ class RegistrationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $auto = Auto::where('id', $id)->get()->first();
+        $auto->delete();
+        $user_id = Auth::id();
+        $autos = Auto::where('user_id', $user_id)->get();
+        $message = "Авто з ID = " . $id . " успішно видалене";
+
+        return view('autos.registration.index', compact('autos', 'message'));
     }
 }

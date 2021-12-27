@@ -47,14 +47,10 @@
                             <td>{{ $value->vin_code }}</td>
                             <td>{{ $value->brand }}</td>
                             <td>
-
-                                <a class="btn btn-small btn-light-success btn-active-success" href="{{ URL::to('loaner/credits/'. $value->id . '/edit') }}" style="padding-left: 40px; padding-right: 40px; margin-bottom: 5px;">Показать</a>
-
-                                <a class="btn btn-small btn-light-warning btn-active-warning" href="{{ URL::to('sadmin/credit_management/' . $value->id . '/edit') }}" style="margin-bottom: 5px;">Редактировать</a>
-
-                                {{ Form::open(array('url' => 'sadmin/credit_management/' . $value->id, 'class' => 'pull-right')) }}
+                                <a class="btn btn-small btn-light-warning btn-active-warning" href="{{ URL::to('autos/registration/' . $value->id . '/edit') }}" style="margin-bottom: 5px;">Редагувати</a>
+                                {{ Form::open(array('url' => 'autos/registration/' . $value->id, 'class' => 'pull-right')) }}
                                 {{ Form::hidden('_method', 'DELETE') }}
-                                {{ Form::submit('Удалить', array('class' => 'btn btn-small btn-light-danger btn-active-warning', 'style' => 'padding-left: 45px; padding-right: 40px; margin-bottom: 5px;')) }}
+                                {{ Form::submit('Видалити', array('class' => 'btn btn-small btn-light-danger btn-active-warning', 'style' => 'margin-bottom: 5px;')) }}
                                 {{ Form::close() }}
 
                             </td>
