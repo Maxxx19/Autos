@@ -25,7 +25,7 @@ class CreateAutosTable extends Migration
             $table->timestamps();
         });
         Schema::table('autos', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();  
+            $table->foreignId('user_id')->nullable()->constrained();  
     });
     }
 

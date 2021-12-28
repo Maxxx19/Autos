@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Auto;
 use Illuminate\Support\Facades\Auth;
 
+
 class RegistrationController extends Controller
 {
     /**

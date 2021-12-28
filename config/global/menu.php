@@ -257,20 +257,20 @@ return array(
                         'path'   => 'autos/list',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
-                    array(
-                        'title'      => 'Security',
-                        'path'       => '#',
-                        'bullet'     => '<span class="bullet bullet-dot"></span>',
-                        'attributes' => array(
-                            'link' => array(
-                                "title"             => "Coming soon",
-                                "data-bs-toggle"    => "tooltip",
-                                "data-bs-trigger"   => "hover",
-                                "data-bs-dismiss"   => "click",
-                                "data-bs-placement" => "right",
-                            ),
-                        ),
-                    ),
+                    // array(
+                    //     'title'      => 'Security',
+                    //     'path'       => '#',
+                    //     'bullet'     => '<span class="bullet bullet-dot"></span>',
+                    //     'attributes' => array(
+                    //         'link' => array(
+                    //             "title"             => "Coming soon",
+                    //             "data-bs-toggle"    => "tooltip",
+                    //             "data-bs-trigger"   => "hover",
+                    //             "data-bs-dismiss"   => "click",
+                    //             "data-bs-placement" => "right",
+                    //         ),
+                    //     ),
+                    // ),
                 ),
             ),
         ),
