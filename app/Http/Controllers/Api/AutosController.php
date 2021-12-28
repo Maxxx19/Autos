@@ -31,6 +31,8 @@ class AutosController extends Controller
      */
     protected function getAutos(Request $request)
     {
+
+        $autos = 'Unavaible data';
         if ($request->has('limit')) {
             $autos = Auto::paginate($request->limit);
         }
@@ -46,19 +48,58 @@ class AutosController extends Controller
                 $autos = Auto::where('vin_code', $request->search)->paginate();
             }
         }
-        if ($request->has('filter_brand') || $request->has('filter_model') || $request->has('filter_year')) {
-            $autos_all = Auto::all();
+
+        if (
+            isset($request->filter_brand) ||
+            isset($request->filter_model) ||
+            isset($request->filter_year)
+        ) {
             if ($request->has('filter_brand')) {
-                $autos_all = $autos_all->where('brand', $request->filter_brand);
+                $autos_all = Auto::where('brand', $request->filter_brand)->paginate();
             }
             if ($request->has('filter_model')) {
-                $autos_all = $autos_all->where('model', $request->filter_model);
+                $autos_all = Auto::where('model', $request->filter_model)->paginate();
             }
             if ($request->has('filter_year')) {
-                $autos_all = $autos_all->where('year', $request->filter_year);
+                $autos_all = Auto::where('year', $request->filter_year)->paginate();
             }
-            $autos = $autos_all;
+            if (
+                $request->has('filter_brand')
+                && $request->has('filter_year')
+            ) {
+                $autos_all = Auto::where('brand', $request->filter_brand)
+                    ->where('year', $request->filter_year)->paginate();
+            }
+            if (
+                $request->has('filter_model')
+                && $request->has('filter_year')
+            ) {
+                $autos_all = Auto::where('model', $request->filter_model)
+                    ->where('year', $request->filter_year)->paginate();
+            }
+            if (
+                $request->has('filter_brand')
+                && $request->has('filter_model')
+            ) {
+                $autos_all = Auto::where('brand', $request->filter_brand)
+                    ->where('model', $request->filter_model)->paginate();
+            }
+            if (
+                $request->has('filter_brand')
+                && $request->has('filter_year')
+                && $request->has('filter_model')
+            ) {
+                $autos_all = Auto::where('brand', $request->filter_brand)
+                    ->where('model', $request->filter_model)
+                    ->where('year', $request->filter_year)->paginate();
+            }
+            if (isset($autos_all[0])) {
+                $autos = $autos_all;
+            } else {
+                $autos = "No data available";
+            }
         }
+
         return response()->json($autos);
     }
     protected function editAuto(Request $request)

@@ -42,21 +42,18 @@ class UpdateBands extends Command
      */
     public function handle()
     {
-        Schema::dropIfExists('brands');
-        Schema::dropIfExists('model_autos');
+        Schema::disableForeignKeyConstraints();
+        Brand::truncate();
+        ModelAuto::truncate();
+        Schema::enableForeignKeyConstraints();
 
         $response = Http::get('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json');
-
-        $brands = Arr::pluck($response['Results'], 'Make_ID');
-
         $models = [];
-        $autos = array_chunk($brands, 10);
-        foreach ($autos as $auto) {
-            foreach ($auto as $key => $value) {
-                $data = Http::get('https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeid/' . $value . '?format=json');
-                $models += $data['Results'];
-            }
-            //dd($models);
+        $brands = Arr::pluck($response['Results'], 'Make_ID');
+        foreach ($brands as $key => $value) {
+            $data = Http::get('https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeid/' . $value . '?format=json');
+            $models += $data['Results'];
+            if ($key == 3) break;
         }
         $data = 0;
         foreach ($models as $model) {
