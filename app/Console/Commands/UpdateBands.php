@@ -53,7 +53,6 @@ class UpdateBands extends Command
         foreach ($brands as $key => $value) {
             $data = Http::get('https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeid/' . $value . '?format=json');
             $models += $data['Results'];
-            if ($key == 3) break;
         }
         $data = 0;
         foreach ($models as $model) {
